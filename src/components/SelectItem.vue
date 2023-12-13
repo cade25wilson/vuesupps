@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: 'Select',
+    name: 'SelectItem',
     setup() {
         return {
             orderby: ''

@@ -1,50 +1,91 @@
 <script>
-import Search from '@/components/Search.vue';
-import Select from '@/components/Select.vue';
-import Message from '@/components/Message.vue';
+import SearchItem from '@/components/SearchItem.vue';
+import SelectItem from '@/components/SelectItem.vue';
+import MessageItem from '@/components/MessageItem.vue';
+import PageButtons from '@/components/PageButtons.vue';
+import Dropdown from '@/components/Dropdown.vue';
+import SupplementItem from '@/components/SupplementItem.vue';
+import axios from 'axios';
 export default {
   components: {
-    Search, 
-    Select,
-    Message
-  }
+    SearchItem, 
+    SelectItem,
+    MessageItem,
+    PageButtons,
+    Dropdown,
+    SupplementItem
+  },
+  data() {
+    return {
+      data: null,
+    };
+  },
+  mounted() {
+    this.getData();
+  },
+  watch: {
+    '$route': 'getData'
+  },
+  methods: {
+    getData() {
+      axios.get('http://laravel.discountsupplinks.com/api/supplements', {
+        params: {
+          page: this.$route.query.page || 1,
+          orderby: this.$route.query.orderby || '-discount',
+        },
+      })
+      .then((response) => {
+        this.data = response.data;
+        window.scrollTo(0, 0);
+        console.log(this.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
+  },
 }
 </script>
 
 <template>
-  <div class="container p-4" style="background-color: white;">
+  <div class="container p-4" style="background-color: white;" v-if="data">
     <div class="row">
       <div class="col-4 col-lg-6">
         <!-- TODO: IMPORT PAGE MESSAGE -->
-        <Message />
+        <message-item :totalItems="data.totalItems" />
       </div>
       <div class="col-4 col-lg-2">
-        <Select />
+        <select-item />
       </div>
       <div class="col-3 col-lg-3 text-right">
-        <Search />
+        <search-item />
       </div>
       <div class="col-1 col-lg-1">
         <div class="dropdown">
           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             Profile
           </a>
-          <!-- TODO: PROFILE DROPDOWN COMPONENT -->
-          <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-
-          </ul> -->
+          <dropdown />
         </div>
       </div>
     </div>
     <div class="row d-flex align-items-stretch pb-5">
-      <!-- TODO: ADD SUPP LOGIC -->
+      <supplement-item :supplements="data.supplements" />
     </div>
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-center">
-          <!-- TODO: ADD PAGINATION BUTTONS -->
+          <PageButtons :page="data.page" :totalpages="data.totalPages"/>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="container p-4" style="background-color: white;" v-else>
+    <div class="row text-center">
+      <h1>Loading...</h1>
     </div>
   </div>
 </template>
