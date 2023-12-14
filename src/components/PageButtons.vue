@@ -1,26 +1,29 @@
 <template>
-    <router-link :to="`?page=${supplements.previous_page_number}&brand=${brandl}`"
+    <router-link :to="`?page=${previousPage}&brand=${brand}&orderby=${orderby}`"
         class="btn btn-outline-primary mx-2 bottom-btn" v-if="page > 1 && pagetype == 'brand'">Previous</router-link>
-    <router-link :to="`?page=${supplements.previous_page_number}&search=${search}`"
+    <router-link :to="`?page=${previousPage}&search=${search}&orderby=${orderby}`"
         class="btn btn-outline-primary mx-2 bottom-btn" v-else-if="page > 1 && pagetype == 'search'">Previous</router-link>
-    <router-link :to="`?page=${supplements.previous_page_number}`" class="btn btn-outline-primary mx-2 bottom-btn"
+    <router-link :to="`?page=${previousPage}&orderby=${orderby}`" class="btn btn-outline-primary mx-2 bottom-btn"
         v-else-if="page > 1 && pagetype == 'favorite'">Previous</router-link>
-    <router-link :to="`?page=${previousPage}`" class="btn btn-outline-primary mx-2 bottom-btn"
+    <router-link :to="`?page=${previousPage}&orderby=${orderby}`" class="btn btn-outline-primary mx-2 bottom-btn"
         v-else-if="page > 1 && pagetype == 'index'">Previous</router-link>
 
-    <router-link :to="`?page=${supplements.next_page_number}&brand=${brand}`"
+    <router-link :to="`?page=${nextPage}&brand=${brand}&orderby=${orderby}`"
         class="btn btn-outline-primary mx-2 bottom-btn" v-if="page < totalpages && pagetype == 'brand'">Next</router-link>
-    <router-link :to="`?page=${supplements.next_page_number}&search=${search}`"
+    <router-link :to="`?page=${nextPage}&search=${search}&orderby=${orderby}`"
         class="btn btn-outline-primary mx-2 bottom-btn"
         v-else-if="page < totalpages && pagetype == 'search'">Next</router-link>
-    <router-link :to="`?page=${supplements.next_page_number}`" class="btn btn-outline-primary mx-2 bottom-btn"
+    <router-link :to="`?page=${nextPage}&orderby=${orderby}`" class="btn btn-outline-primary mx-2 bottom-btn"
         v-else-if="page < totalpages && pagetype == 'favorite'">Next</router-link>
-    <router-link :to="`?page=${nextPage}`" class="btn btn-outline-primary mx-2 bottom-btn" v-else>Next</router-link>
+    <router-link :to="`?page=${nextPage}&orderby=${orderby}`" class="btn btn-outline-primary mx-2 bottom-btn" v-else>Next</router-link>
 </template>
 
 <script>
 export default {
     name: 'PageButtons',
+    mounted() {
+        console.log(this.pagetype);
+    },
 
     props: {
         page: {
@@ -35,6 +38,11 @@ export default {
             type: String,
             required: false,
             default: 'index'
+        },
+        orderby: {
+            type: String,
+            required: false,
+            default: '-discount'
         },
     },
     computed: {

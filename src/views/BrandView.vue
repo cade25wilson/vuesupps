@@ -32,8 +32,9 @@ export default {
   },
   methods: {
     getData() {
-      axios.get('http://laravel.discountsupplinks.com/api/supplements', {
+      axios.get('http://laravel.discountsupplinks.com/api/brand', {
         params: {
+          brand: this.$route.query.brand,
           page: this.$route.query.page || 1,
           orderby: this.$route.query.orderby || '-discount',
         },
@@ -44,6 +45,7 @@ export default {
         console.log(this.data);
       })
       .catch((error) => {
+        console.log(this.$route.params.brand)
         console.log(error);
       });
     },
@@ -85,7 +87,7 @@ export default {
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-center">
-          <PageButtons :page="data.page" :totalpages="data.totalPages" :orderby="orderby"/>
+          <PageButtons :page="data.page" :totalpages="data.totalPages" :orderby="orderby" pagetype="brand"/>
         </div>
       </div>
     </div>

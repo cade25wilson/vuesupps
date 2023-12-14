@@ -36,9 +36,9 @@
                     </div>
                     <div class="col-9">
                         <div class="product-brand text-end">
-                            <a :href="`/brand?brand=`+supplement.brand_url" class="text-black">
+                            <router-link :to="`/brand?brand=${supplement.brand_url}`" class="text-black">
                                 <p class="mb-0">{{ supplement.brand_name }}</p>
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                 </div>

@@ -32,8 +32,9 @@ export default {
   },
   methods: {
     getData() {
-      axios.get('http://laravel.discountsupplinks.com/api/supplements', {
+      axios.get('http://laravel.discountsupplinks.com/api/search', {
         params: {
+          search: this.$route.query.search || '',
           page: this.$route.query.page || 1,
           orderby: this.$route.query.orderby || '-discount',
         },
@@ -85,7 +86,7 @@ export default {
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-center">
-          <PageButtons :page="data.page" :totalpages="data.totalPages" :orderby="orderby"/>
+          <PageButtons :page="data.page" :totalpages="data.totalPages" :orderby="orderby" pagetype="search"/>
         </div>
       </div>
     </div>
