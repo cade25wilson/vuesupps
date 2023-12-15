@@ -15,7 +15,7 @@
         v-else-if="page < totalpages && pagetype == 'search'">Next</router-link>
     <router-link :to="`?page=${nextPage}&orderby=${orderby}`" class="btn btn-outline-primary mx-2 bottom-btn"
         v-else-if="page < totalpages && pagetype == 'favorite'">Next</router-link>
-    <router-link :to="`?page=${nextPage}&orderby=${orderby}`" class="btn btn-outline-primary mx-2 bottom-btn" v-else>Next</router-link>
+    <router-link :to="`?page=${nextPage}&orderby=${orderby}`" class="btn btn-outline-primary mx-2 bottom-btn" v-else-if="page < totalpages && pagetype == 'index'">Next</router-link>
 </template>
 
 <script>
