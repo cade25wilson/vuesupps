@@ -36,7 +36,7 @@ export default {
   computed : {
     pagetype() {
       return this.$route.path.split('/')[1] || 'supplements';
-    }
+    },
   },
   methods: {
     getData() {
@@ -71,7 +71,7 @@ export default {
 </script>
 
 <template>
-  <div class="container p-4" style="background-color: white;" v-if="data">
+  <div class="container p-4" v-if="data">
     <div class="row">
       <div class="col-4 col-lg-6">
         <message-item :totalItems="data.totalItems" />
@@ -104,3 +104,9 @@ export default {
   </div>
   <loading-item v-else />
 </template>
+
+<style>
+.container {
+  background-color: white;
+}
+</style>

@@ -1,19 +1,43 @@
 <template>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <!-- {% if logged_in %}
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><a class="dropdown-item" href="/favorites" hx-get="/favorites" hx-target="main" hx-push-url="true">Favorites</a></li>
-          <li><a class="dropdown-item" hx-get="signout" hx-push-url="/" hx-target="main" href="/signout">Sign Out</a></li>
-      {% else %} -->
-        <li><a class="dropdown-item" hx-get="/signin" hx-push-url="true" hx-target="main" href="/signin">Sign In</a></li>
-        <li><a class="dropdown-item" hx-get="/signup" hx-push-url="true" hx-target="main" href="/signup">Sign Up</a></li>
-      <!-- {% endif %} -->
+        <li><a class="dropdown-item" href="#" v-if="isLoggedIn">Profile</a></li>
+        <li><a class="dropdown-item" href="/favorites" hx-get="/favorites" hx-target="main" hx-push-url="true" v-if="isLoggedIn">Favorites</a></li>
+        <li><a class="dropdown-item" href="#" v-if="isLoggedIn" @click="logout">Logout</a></li>
+        <li><router-link class="dropdown-item" to="/signin" v-if="!isLoggedIn">Sign In</router-link></li>
+        <li><router-link class="dropdown-item" to="/signup" v-if="!isLoggedIn">Sign Up</router-link></li>
   </ul>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'DropDown',
+  methods: {
+    logout() {
+      // localStorage.removeItem('authToken');
+      // this.$router.push({ path: '/' });
+      axios.post('http://laravel.discountsupplinks.com/api/favorites', {
+            // Request data
+        }, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            }
+        })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+            // log the request that was made
+            
+        });
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return !!localStorage.getItem('authToken');
+    }
+  },
 }
 </script>
 
