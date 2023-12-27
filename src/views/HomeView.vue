@@ -3,7 +3,7 @@ import SearchItem from '@/components/SearchItem.vue';
 import SelectItem from '@/components/SelectItem.vue';
 import MessageItem from '@/components/MessageItem.vue';
 import PageButtons from '@/components/PageButtons.vue';
-import Dropdown from '@/components/DropDown.vue';
+import DropDown from '@/components/DropDown.vue';
 import SupplementItem from '@/components/SupplementItem.vue';
 import LoadingItem from '@/components/LoadingItem.vue';
 import axios from 'axios';
@@ -13,7 +13,7 @@ export default {
     SelectItem,
     MessageItem,
     PageButtons,
-    Dropdown,
+    DropDown,
     SupplementItem,
     LoadingItem,
   },
@@ -31,7 +31,7 @@ export default {
     '$route': 'getData',
     '$route.query.orderby': function(newOrderby) {
       this.orderby = newOrderby || '';
-    }
+    },
   },
   computed : {
     pagetype() {
@@ -49,6 +49,7 @@ export default {
       })
       .then((response) => {
         this.data = response.data;
+        console.log(response.data)
         window.scrollTo(0, 0);
       })
       .catch((error) => {
@@ -66,6 +67,31 @@ export default {
         } 
       });
     },
+    addFavorite(id) {
+      if(!this.data.favorites.includes(id)) {
+        this.data.favorites.push(id);
+      }
+    },
+    removeFavorite(id) {
+      const index = this.data.favorites.indexOf(id);
+      if(index > -1) {
+        this.data.favorites.splice(index, 1);
+      }
+    },
+    logout(orderby){
+      axios.post('http://laravel.discountsupplinks.com/api/logout')
+      .then(() => {
+        // remove laravel_session cookie
+        document.cookie = 'laravel_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        // redirect to home page
+        this.$router.push({ 
+          query: { 
+            ...this.$route.query, 
+            orderby: orderby 
+          } 
+        });
+      })
+    }
   },
 }
 </script>
@@ -87,12 +113,12 @@ export default {
           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             Profile
           </a>
-          <dropdown />
+          <drop-down v-on:logout="logout" />
         </div>
       </div>
     </div>
     <div class="row d-flex align-items-stretch pb-5">
-      <supplement-item :supplements="data.supplements" />
+      <supplement-item :supplements="data.supplements" :favorites="data.favorites" v-on:add-favorite="addFavorite" v-on:remove-favorite="removeFavorite" />
     </div>
     <div class="row">
       <div class="col-12">

@@ -9,38 +9,17 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'DropDown',
   methods: {
     logout() {
-      // localStorage.removeItem('authToken');
-      // this.$router.push({ path: '/' });
-      axios.post('http://laravel.discountsupplinks.com/api/favorites', {
-            // Request data
-        }, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-            }
-        })
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-            // log the request that was made
-            
-        });
+      this.$emit('logout');
     }
   },
   computed: {
     isLoggedIn() {
-      return !!localStorage.getItem('authToken');
+      return document.cookie.match(/laravel_session=([^;]+)/)
     }
   },
 }
 </script>
-
-<style>
-
-</style>

@@ -39,7 +39,7 @@ export default {
                         password: this.password,
                     })
                         .then(response => {
-                            localStorage.setItem('authToken', response.data.token);
+                            this.router.push({ name: 'Home' });
                             console.log(response.data.token);
                         })
                         .catch(error => {
@@ -48,29 +48,6 @@ export default {
                         });
                 });
         },
-
-        test() {
-            axios.get('http://laravel.discountsupplinks.com/api/test', {
-                withCredentials: true
-            })
-                .then(response => {
-                    // Handle the response, e.g. save the email in your component's data
-                    this.email = response.data.email;
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    // Handle the error, e.g. show an error message
-                    console.error(error);
-                });
-        },
-
-        handleKeyDown(event) {
-            if (event.ctrlKey && event.key === 'r') {
-                event.preventDefault();
-                this.test();
-            }
-        },
-
     },
 };
 </script>

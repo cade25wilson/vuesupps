@@ -6,22 +6,16 @@
                     <a :href="supplement.supplementlink ? supplement.supplementlink.url : supplement.url">
                         <img :src="supplement.image" :alt="supplement.name" class="img-thumbnail border-0"
                             style="max-height: 266px;" v-if="supplement.image">
-                        <!-- <img src="{% static '/images/' %}loadingimg.jpg" alt="{{ supplement.name }}"
-                            class="img-thumbnail border-0" style="max-height: 266px;" v-else> -->
                     </a>
-                    <!-- {% if logged_in %}
-                    {% if supplement.id in ids %}
-                    <div class="col-1 offset-11 full{{supplement.id}}">
-                        <i hx-post="/remove/?id={{supplement.id}}" hx-target=".full{{supplement.id}}" hx-push-url="false"
-                            class="bi bi-heart-fill text-danger text-right"></i>
-                    </div>
-                    {% else %}
-                    <div class="col-1 offset-11 empty{{supplement.id}}">
-                        <i hx-post="/add/?id={{supplement.id}}" hx-target=".empty{{supplement.id}}" hx-push-url="false"
-                            class="bi bi-heart text-secondary"></i>
-                    </div>
-                    {% endif %}
-                    {% endif %} -->
+                    <!-- if supplements is not an empty array -->
+                    <template v-if="favorites.length > 0">
+                        <div :class="`col-1 offset-11 full${supplement.id}`" v-if="favorites.includes(supplement.id)">
+                            <i class="bi bi-heart-fill text-danger text-right" @click="removeFavorite(supplement.id)"></i>
+                        </div>
+                        <div :class="`col-1 offset-11 empty${supplement.id}`" v-else>
+                            <i class="bi bi-heart text-secondary" @click="addFavorite(supplement.id)"></i>
+                        </div>
+                    </template>
             </div>
             <div class="product-name h-auto">
                 <h5>{{ supplement.name }}</h5>
@@ -68,12 +62,42 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'SupplementItem',
     props: {
         supplements: {
             type: Array,
             required: true
+        },
+        favorites: {
+            type: Array,
+            required: true
+        }
+    },
+    methods: {
+        addFavorite(id) {
+            axios.post(`http://laravel.discountsupplinks.com/api/favorites/${id}`)
+                .then(response => {
+                    console.log(response.data);
+                    this.$emit('add-favorite', id);
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    // this.error = error.response.data.error;
+                })
+        },
+        removeFavorite(id) {
+            axios.delete(`http://laravel.discountsupplinks.com/api/favorites/${id}`)
+                .then(response => {
+                    console.log(response.data);
+                    this.$emit('remove-favorite', id);
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                    // this.error = error.response.data.error;
+                })
         },
     }
 }
