@@ -39,11 +39,11 @@ export default {
                         password: this.password,
                     })
                         .then(response => {
-                            this.router.push({ name: 'Home' });
-                            console.log(response.data.token);
+                            localStorage.setItem('authToken', response.data.token);
+                            this.$router.push({ path: '/' });
                         })
                         .catch(error => {
-                            console.log(error.response.data);
+                            console.log(error.response);
                             // this.error = error.response.data.error;
                         });
                 });

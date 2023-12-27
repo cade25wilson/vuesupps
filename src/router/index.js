@@ -22,6 +22,11 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/favorites',
+      name: 'favorites',
+      component: HomeView
+    },
+    {
       path: '/signin',
       name: 'signin',
       component: SigninView
@@ -30,7 +35,7 @@ const router = createRouter({
       path: '/signup',
       name: 'signup',
       component: SignupView
-    }
+    },
   ]
 })
 

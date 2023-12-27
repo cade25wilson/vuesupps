@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     isLoggedIn() {
-      return document.cookie.match(/laravel_session=([^;]+)/)
+      return !!localStorage.getItem('authToken');
     }
   },
 }

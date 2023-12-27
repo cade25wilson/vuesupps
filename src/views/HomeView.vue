@@ -81,8 +81,8 @@ export default {
     logout(orderby){
       axios.post('http://laravel.discountsupplinks.com/api/logout')
       .then(() => {
-        // remove laravel_session cookie
-        document.cookie = 'laravel_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        // remove authToken from localstorage
+        localStorage.removeItem('authToken');
         // redirect to home page
         this.$router.push({ 
           query: { 
