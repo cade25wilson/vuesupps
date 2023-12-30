@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         addFavorite(id) {
-            axios.post(`http://laravel.discountsupplinks.com/api/favorites/${id}`)
+            axios.post(`https://laravel.discountsupplinks.com/api/favorites/${id}`)
                 .then(response => {
                     console.log(response.data);
                     this.$emit('add-favorite', id);
@@ -89,7 +89,7 @@ export default {
                 })
         },
         removeFavorite(id) {
-            axios.delete(`http://laravel.discountsupplinks.com/api/favorites/${id}`)
+            axios.delete(`https://laravel.discountsupplinks.com/api/favorites/${id}`)
                 .then(response => {
                     console.log(response.data);
                     this.$emit('remove-favorite', id);

@@ -64,7 +64,7 @@ export default {
                 return;
             }
 
-            axios.post('http://laravel.discountsupplinks.com/api/signup', {
+            axios.post('https://laravel.discountsupplinks.com/api/signup', {
                 full_name: this.full_name,
                 email: this.email,
                 password: this.password,

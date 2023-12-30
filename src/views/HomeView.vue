@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     getData() {
-      axios.get(`http://laravel.discountsupplinks.com/api/${this.pagetype}`, {
+      axios.get(`https://laravel.discountsupplinks.com/api/${this.pagetype}`, {
         params: {
           [this.pagetype]: this.$route.query[this.pagetype] || '',
           page: this.$route.query.page || 1,
@@ -79,7 +79,7 @@ export default {
       }
     },
     logout(orderby){
-      axios.post('http://laravel.discountsupplinks.com/api/logout')
+      axios.post('https://laravel.discountsupplinks.com/api/logout')
       .then(() => {
         // remove authToken from localstorage
         localStorage.removeItem('authToken');

@@ -32,9 +32,9 @@ export default {
     },
     methods: {
         login() {
-            axios.get('http://laravel.discountsupplinks.com/sanctum/csrf-cookie')
+            axios.get('https://laravel.discountsupplinks.com/sanctum/csrf-cookie')
                 .then(() => {
-                    axios.post('http://laravel.discountsupplinks.com/api/login', {
+                    axios.post('https://laravel.discountsupplinks.com/api/login', {
                         email: this.email,
                         password: this.password,
                     })
