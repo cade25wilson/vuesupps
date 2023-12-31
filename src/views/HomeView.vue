@@ -97,7 +97,7 @@ export default {
 </script>
 
 <template>
-  <div class="container p-4" v-if="data">
+  <div class="container p-4 bg-white" v-if="data">
     <div class="row">
       <div class="col-4 col-lg-6">
         <message-item :totalItems="data.totalItems" />
@@ -130,9 +130,3 @@ export default {
   </div>
   <loading-item v-else />
 </template>
-
-<style>
-.container {
-  background-color: white;
-}
-</style>

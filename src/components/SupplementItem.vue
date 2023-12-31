@@ -1,11 +1,11 @@
 <template>
     
-    <div class="col-xl-3 col-lg-4 col-12 mt-3" style="height: auto;" v-for="supplement in supplements" :key="supplement.id">
-        <div class="border rounded p-3" style="height: 100%;">
+    <div class="col-xl-3 col-lg-4 col-12 mt-3 h-auto" v-for="supplement in supplements" :key="supplement.id">
+        <div class="border rounded p-3 h-100">
             <div class="mb-2 text-center">
                     <a :href="supplement.supplementlink ? supplement.supplementlink.url : supplement.url">
-                        <img :src="supplement.image" :alt="supplement.name" class="img-thumbnail border-0"
-                            style="max-height: 266px;" v-if="supplement.image">
+                        <img :src="supplement.image" :alt="supplement.name" class="img-thumbnail border-0 h-auto w-auto"
+                            v-if="supplement.image">
                     </a>
                     <!-- if supplements is not an empty array -->
                     <template v-if="favorites.length > 0">
@@ -18,8 +18,8 @@
                     </template>
             </div>
             <div class="product-name h-auto">
-                <h5>{{ supplement.name }}</h5>
-                <div class="row" style="height: auto;">
+                <p class="h5-style">{{ supplement.name }}</p>
+                <div class="row h-auto">
                     <div class="col-3">
                         <div class="product-price">
                             <p>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-9">
                         <div class="product-brand text-end">
-                            <router-link :to="`/brand?brand=${supplement.brand_url}`" class="text-black">
+                            <router-link :to="`/brand?brand=${supplement.brand_url}`" class="text-black" v-if="supplement.brand_url">
                                 <p class="mb-0">{{ supplement.brand_name }}</p>
                             </router-link>
                         </div>
@@ -102,5 +102,3 @@ export default {
     }
 }
 </script>
-
-<style></style>
