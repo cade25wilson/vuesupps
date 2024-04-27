@@ -1,18 +1,24 @@
 <template>
-    <div>
-        <h2>Login</h2>
-        <form @submit.prevent="login">
-            <div>
-                <label>Email:</label>
-                <input type="email" v-model="email" required>
-            </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" v-model="password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <p v-if="error">{{ error }}</p>
+    <div class="container">
+        <div class="col-6 offset-3 text-center">
+            <h2>Login</h2>
+            <form @submit.prevent="login">
+                <div class="row">
+                    <div class="form-group col-6 offset-3">
+                        <label>Email:</label>
+                        <input type="email" class="form-control" v-model="email" required>
+                    </div>  
+                </div>
+                <div>
+                    <div class="form-group col-6 offset-3">
+                        <label>Password:</label>
+                        <input type="password" class="form-control" v-model="password" required>
+                    </div>  
+                </div>
+                <button class="btn btn-primary mt-3" type="submit">Login</button>
+            </form>
+            <p v-if="error">{{ error }}</p>
+        </div>  
     </div>
 </template>
 

@@ -50,6 +50,8 @@ export default {
       .then((response) => {
         this.data = response.data;
         console.log(response.data)
+        // log the request that was made
+        console.log(response.config.url);
         window.scrollTo(0, 0);
       })
       .catch((error) => {
